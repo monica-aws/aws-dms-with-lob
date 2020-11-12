@@ -23,7 +23,7 @@ It assumes you are familiar with:
 
 Let's get started...
 
-#### Step1: Set Up the Source Database
+### Step1: Set Up the Source Database
 
 
 First, create your AWS EC2 instance from AWS Management Console and connect to it by SSH.
@@ -84,7 +84,7 @@ Restart Postgres database:
 $ sudo /etc/init.d/postgresql restart
 ```
 
-Now let's create and prepare the database...
+#### Now let's create and prepare the database...
 
 From within your EC2 instance:
 
@@ -103,9 +103,9 @@ $ postgres=# GRANT ALL PRIVILEGES ON DATABASE database_name to username;
 Copy (sftp) the content of `./data` folder into your EC2 instance  and 
 grant read access to `postgres` user.
 
-_For this working sample, I copied them to `/home/ubuntu/db-migration/data/`_
+> _For this working sample, I copied them to `/home/ubuntu/db-migration/data/`_
 
-Now create the source table and load the files:
+Now, create the source table and import the files:
 
 ```sh
 $ sudo su postgres
@@ -152,14 +152,14 @@ If the target table exists in the target database, ensure you have the PK constr
 In addition, ensure the LOB column is marked as “nullable”.
 
 
-#### Step 2: Set Up the Target Database
+### Step 2: Set Up the Target Database
 
 
 To set up the PostgreSQL database follow the tutorial 
 [Create and Connect to a PostgreSQL database with Amazon RDS](https://aws.amazon.com/getting-started/tutorials/create-connect-postgresql-db/).
 
 
-#### Step 3: Set Up AWS DMS
+### Step 3: Set Up AWS DMS
 
 
 1/ Create a Replication Instance in AWS DMS
@@ -189,8 +189,6 @@ exists in IAM.
 [Why can't I see CloudWatch Logs for an AWS DMS task?](https://aws.amazon.com/premiumsupport/knowledge-center/dms-cloudwatch-logs-not-appearing/) 
 to enable AWS DMS logs. 
 
-
-*Happy database migration!*
 
 
 
