@@ -1,6 +1,6 @@
 
-Welcome to AWS Database Migration Service with LOB columns - Quick Guide
-===================================
+AWS Database Migration Service with LOB columns - Quick Guide
+=============================================================
 
 What's Here
 -----------
@@ -23,7 +23,8 @@ It assumes you are familiar with:
 
 Let's get started...
 
-###Step1: Set Up the Source Database
+Step1: Set Up the Source Database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, create your AWS EC2 instance from AWS Management Console and connect to it by SSH.
 
@@ -44,7 +45,8 @@ $ systemctl status postgresql@12-main.service
 $ systemctl is-enabled postgresql
 ```
 
-Change the password of `postgres` user:
+Change the password for your `postgres` user:
+
 ```sh
 $ sudo -u postgres psql
 $ postgres=#\password
@@ -70,17 +72,19 @@ listen_address='*'
 # save the file
 ```
 
-As per AWS documentation, apply also the configuration changes documented at
+As per AWS documentation, apply the configuration changes documented at
 [Prerequisites for using a PostgreSQL database as a source for AWS DMS](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html#CHAP_Source.PostgreSQL.Prerequisites)
+as well.
 
-Note you can find both files in `./source_config` folder for your reference.
+For your reference, find both files in `./source_config` folder.
+
+Restart Postgres database:
 
 ```sh
-# Restart Postgres Server
-sudo /etc/init.d/postgresql restart
+$ sudo /etc/init.d/postgresql restart
 ```
 
-####Create and Prepare the Database
+Now let's create and prepare the database...
 
 From within your EC2 instance:
 
@@ -148,12 +152,16 @@ If the target table exists in the target database, ensure you have the PK constr
 In addition, ensure the LOB column is marked as “nullable”.
 
 
-### Step 2: Set Up the Target Database
+Step 2: Set Up the Target Database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 To set up the PostgreSQL database follow the tutorial 
 [Create and Connect to a PostgreSQL database with Amazon RDS](https://aws.amazon.com/getting-started/tutorials/create-connect-postgresql-db/).
 
 
-###Step 3: Set Up AWS DMS
+Step 3: Set Up AWS DMS
+~~~~~~~~~~~~~~~~~~~~~~
+
 1/ Create a Replication Instance in AWS DMS
 
 2/ Create Source and Target Endpoints for your database migration
@@ -182,7 +190,7 @@ exists in IAM.
 to enable AWS DMS logs. 
 
 
-Happy database migration!
+*Happy database migration!*
 
 
 
