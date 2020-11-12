@@ -6,15 +6,7 @@ What's Here
 -----------
 
 A step by step working sample on how to migrate a table containing LOB columns 
-using AWS Database Migration Service (AWS DMS), 
-from a PostgreSQL database running on an AWS EC2 instance, 
-to an AWS RDS PostgreSQL database. 
-
-Main steps are:
-
-1. Set Up the Source Database
-2. Set Up the Target Database 
-3. Set Up AWS DMS
+using AWS Database Migration Service (AWS DMS).
 
 It assumes you are familiar with:
 -	AWS Management Console
@@ -22,7 +14,18 @@ It assumes you are familiar with:
 -	AWS IAM
 - AWS Database Migration Service (AWS DMS)
 
-Let's get started...
+###### Testing scenario:
+
+- Source database : PostgreSQL database running on an AWS EC2 instance
+- Target database : AWS RDS PostgreSQL database
+
+###### Main steps:
+
+1. Set Up the Source Database
+2. Set Up the Target Database 
+3. Set Up AWS DMS
+
+**Let's get started...**
 
 ### Step1: Set Up the Source Database
 
