@@ -10,11 +10,11 @@ using AWS Database Migration Service (AWS DMS),
 from a PostgreSQL database running on an AWS EC2 instance, 
 to an AWS RDS PostgreSQL database. 
 
-Main steps covered are:
+Main steps are:
 
--  `Set Up the Source Database <#source-database>`__
--  `Set Up the Target Database <#target-database>`__
--  `Set Up AWS DMS <#aws-dms>`_
+1. Set Up the Source Database
+2. Set Up the Target Database 
+3. Set Up AWS DMS
 
 It assumes you are familiar with:
 -	AWS Management Console
