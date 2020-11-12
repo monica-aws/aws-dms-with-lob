@@ -23,8 +23,8 @@ It assumes you are familiar with:
 
 Let's get started...
 
-Step1: Set Up the Source Database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Step1: Set Up the Source Database
+
 
 First, create your AWS EC2 instance from AWS Management Console and connect to it by SSH.
 
@@ -152,15 +152,15 @@ If the target table exists in the target database, ensure you have the PK constr
 In addition, ensure the LOB column is marked as “nullable”.
 
 
-Step 2: Set Up the Target Database
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Step 2: Set Up the Target Database
+
 
 To set up the PostgreSQL database follow the tutorial 
 [Create and Connect to a PostgreSQL database with Amazon RDS](https://aws.amazon.com/getting-started/tutorials/create-connect-postgresql-db/).
 
 
-Step 3: Set Up AWS DMS
-~~~~~~~~~~~~~~~~~~~~~~
+#### Step 3: Set Up AWS DMS
+
 
 1/ Create a Replication Instance in AWS DMS
 
