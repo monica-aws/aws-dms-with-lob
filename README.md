@@ -11,10 +11,10 @@ from a PostgreSQL database running on an AWS EC2 instance,
 to an AWS RDS PostgreSQL database. 
 
 Main steps covered are:
-1. `Set Up the Source Database <#source-database>`__
-2. `Set Up the Target Database <#target-database>`__
-3. `Set Up AWS DMS <#aws-dms>`_
 
+-  `Set Up the Source Database <#source-database>`__
+-  `Set Up the Target Database <#target-database>`__
+-  `Set Up AWS DMS <#aws-dms>`_
 
 It assumes you are familiar with:
 -	AWS Management Console
