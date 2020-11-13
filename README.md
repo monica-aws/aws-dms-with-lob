@@ -14,12 +14,12 @@ It assumes you are familiar with:
 -	AWS IAM
 - AWS Database Migration Service (AWS DMS)
 
-###### Testing scenario:
+**Testing scenario:**
 
-- Source database : PostgreSQL database running on an AWS EC2 instance
-- Target database : AWS RDS PostgreSQL database
+- Source database : PostgreSQL running on an AWS EC2 instance
+- Target database : AWS RDS PostgreSQL
 
-###### Main steps:
+**Main steps:**
 
 1. Set Up the Source Database
 2. Set Up the Target Database 
@@ -28,7 +28,6 @@ It assumes you are familiar with:
 **Let's get started...**
 
 ### Step1: Set Up the Source Database
-
 
 First, create your AWS EC2 instance from AWS Management Console and connect to it by SSH.
 
@@ -56,23 +55,26 @@ $ sudo -u postgres psql
 $ postgres=#\password
 ```
 
-Apply the following configuration changes:
+Apply the following configuration changes to the Postgres database:
 
+1/ Edit `pg_hba.conf` in vim
 ```sh
-# Edit pg_hba.conf in vim
-sudo vim /etc/postgresql/12/main/pg_hba.conf
+$ sudo vim /etc/postgresql/12/main/pg_hba.conf
 
 # Near bottom of file after local rules, add rule (allows remote access):
 host    all             all             0.0.0.0/0               md5
 
 # save the file
+```
 
-# Edit config in vim
-sudo vim /etc/postgresql/12/main/postgresql.conf
+2/ Edit `postgresql.conf` in vim
+
+```sh
+$ sudo vim /etc/postgresql/12/main/postgresql.conf
 
 # Change listen_address to listen to external requests:
 listen_address='*'
-  
+
 # save the file
 ```
 
@@ -80,15 +82,17 @@ As per AWS documentation, apply the configuration changes documented at
 [Prerequisites for using a PostgreSQL database as a source for AWS DMS](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.PostgreSQL.html#CHAP_Source.PostgreSQL.Prerequisites)
 as well.
 
-For your reference, find both files in `./source_config` folder.
+_For your reference, find both files in `./source_config` folder._
 
-Restart Postgres database:
+Restart the database:
 
 ```sh
 $ sudo /etc/init.d/postgresql restart
 ```
 
 #### Now let's create and prepare the database...
+
+1/ Create the database:
 
 From within your EC2 instance:
 
@@ -104,16 +108,18 @@ $ postgres=# GRANT ALL PRIVILEGES ON DATABASE database_name to username;
 >
 > You will need these values later, when setting up AWS DMS source endpoint.
 
-Copy (sftp) the content of `./data` folder into your EC2 instance  and 
+
+2/ Prepare the files that will be imported to the LOB column:
+
+Copy (sftp) the content of `./data` folder into your EC2 instance and 
 grant read access to `postgres` user.
 
 > _For this working sample, I copied them to `/home/ubuntu/db-migration/data/`_
 
-Now, create the source table and import the files:
+3/ Finally, create the source table and import the files:
 
 ```sh
 $ sudo su postgres
-
 $ psql database_name
 
 -- create the document table
@@ -134,15 +140,20 @@ $ UPDATE document SET content = lo_get(content_oid);
 -- delete the files from large object storage
 $ SELECT lo_unlink(content_oid) FROM document;
 
--- add the PK to your table
+-- add the PK to the table
 $ ALTER TABLE document ADD COLUMN id serial;
-
 $ ALTER TABLE document ADD PRIMARY KEY (id);
 ```
 
+As a result, you obtain a table with four columns:
+
+- `id`: (serial) The primary key 
+- `filename`: (text) Name of the file imported 
+- `content`: (bytea) The LOB column 
+- `content_oid`: (oid) Link id used by postgres when importing the content
 
 For the migration to be successful, the target table must have a 
-PK and the LOB column(s) must be ‘nullable’.
+primary key and the LOB column(s) must be ‘nullable’.
 
 If the target table does not exist yet, your source table must 
 have a PK and the type of the PK column cannot be of a type that AWS DMS treats as LOB.
